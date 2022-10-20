@@ -1,5 +1,5 @@
 export type SidenavItemModel = {
-  labelTranslation: string;
+  labelTranslation?: string;
   iconName: string;
   path: string;
 };

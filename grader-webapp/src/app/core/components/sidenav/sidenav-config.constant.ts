@@ -1,14 +1,18 @@
 import { SidenavItemModel } from './sidenav-item.model';
 
-export const SIDENAV_CONFIG: SidenavItemModel[] = [
+export const SIDENAV_CONFIG: readonly SidenavItemModel[] = [
+  {
+    iconName: 'person',
+    path: 'user',
+  },
   {
     labelTranslation: 'sidenav.home',
-    iconName: '',
+    iconName: 'dashboard',
     path: 'home',
   },
   {
     labelTranslation: 'sidenav.configuration',
-    iconName: '',
+    iconName: 'settings',
     path: 'configuration',
   },
 ];

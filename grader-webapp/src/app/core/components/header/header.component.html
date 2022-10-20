@@ -1,6 +1,9 @@
 <mat-toolbar>
-  <mat-icon *ngIf="isMobile" (click)="toggleSidenav()">menu</mat-icon>
-  <span>Grading system</span>
+  <button *ngIf="isMobile" mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <button mat-mini-fab color="accent"><mat-icon>arrow_back</mat-icon></button>
+  <span translate="title"></span>
   <span class="spacer"></span>
-  <mat-icon>more_vert</mat-icon>
+  <button mat-mini-fab color="primary"><mat-icon>more_vert</mat-icon></button>
 </mat-toolbar>

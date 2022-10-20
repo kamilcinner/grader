@@ -1,5 +1,6 @@
-<mat-nav-list>
-  <a *ngFor="let item of sidenavItems" mat-list-item [routerLink]="item.path">
-    <span [translate]="item.labelTranslation"></span>
-  </a>
-</mat-nav-list>
+<ul class="sidenav-list">
+  <li *ngFor="let item of sidenavItems" mat-ripple class="sidenav-list-item" [routerLink]="item.path">
+    <mat-icon class="sidenav-list-item-icon" [innerText]="item.iconName"></mat-icon>
+    <span class="sidenav-list-item-text" [translate]="item.labelTranslation ?? ''"></span>
+  </li>
+</ul>
