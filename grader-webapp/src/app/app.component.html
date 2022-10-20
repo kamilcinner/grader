@@ -1,4 +1,4 @@
-<mat-sidenav-container class="app-container">
+<mat-sidenav-container *ngIf="isLangInit" class="app-container">
   <mat-sidenav [(opened)]="isSidenavOpened" [mode]="isMobile ? 'over' : 'side'" role="navigation">
     <nav>
       <app-sidenav></app-sidenav>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SIDENAV_CONFIG } from './sidenav-config.constant';
 import { SidenavItemModel } from './sidenav-item.model';
 
@@ -6,6 +6,7 @@ import { SidenavItemModel } from './sidenav-item.model';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent {
   readonly sidenavItems: SidenavItemModel[];
