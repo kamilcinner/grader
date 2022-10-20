@@ -1,1 +1,16 @@
-<app-layout></app-layout>
+<mat-sidenav-container class="app-container">
+  <mat-sidenav [(opened)]="isSidenavOpened" [mode]="isMobile ? 'over' : 'side'" role="navigation">
+    <nav>
+      <app-sidenav></app-sidenav>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content role="main">
+    <header>
+      <app-header [isMobile]="isMobile" [(isSidenavOpened)]="isSidenavOpened"></app-header>
+    </header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

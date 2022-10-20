@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SidenavItemModel } from './sidenav-item/sidenav-item.model';
 import { SIDENAV_CONFIG } from './sidenav-config.constant';
+import { SidenavItemModel } from './sidenav-item.model';
 
 @Component({
   selector: 'app-sidenav',

@@ -1,4 +1,4 @@
-import { SidenavItemModel } from './sidenav-item/sidenav-item.model';
+import { SidenavItemModel } from './sidenav-item.model';
 
 export const SIDENAV_CONFIG: SidenavItemModel[] = [
   {
