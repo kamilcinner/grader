@@ -59,7 +59,7 @@ export class HttpService {
     });
   }
 
-  protected delete<T>(url: string, body: Record<string, unknown>, options?: HttpOptions): Observable<T> {
+  protected delete<T>(url: string, body?: Record<string, unknown>, options?: HttpOptions): Observable<T> {
     return this.http.delete<T>(`${environment.API_URL}${url}`, {
       ...options,
       body,
