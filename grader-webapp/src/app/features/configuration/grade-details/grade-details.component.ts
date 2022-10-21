@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-grade-details',
@@ -10,11 +10,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class GradeDetailsComponent implements OnInit {
   vm = 123;
 
-  constructor(private readonly fb: FormBuilder) {}
+  constructor(private readonly fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {}
 
-  private createForm(): FormGroup {
+  private createForm(): UntypedFormGroup {
     return this.fb.group({
       id: [],
       symbolicGrade: [],

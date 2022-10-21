@@ -103,8 +103,9 @@
       }
     }
   },
-  "defaultProject": "grader-webapp",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
