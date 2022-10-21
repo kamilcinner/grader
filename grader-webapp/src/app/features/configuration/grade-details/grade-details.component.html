@@ -1,14 +1,24 @@
-<ng-container [formGroup]="form">
+<div class="container-fluid" [formGroup]="form">
+  <div class="row gx-5 justify-content-center">
+    <div class="col">
+      <app-input
+        formControlName="minPercentage"
+        labelTranslation="configuration.form.percentFrom"
+        iconName="percent"
+      ></app-input>
+    </div>
+    <div class="col">
+      <app-input
+        formControlName="maxPercentage"
+        labelTranslation="configuration.form.percentTo"
+        iconName="percent"
+      ></app-input>
+    </div>
+  </div>
+  <app-input class="d-block" formControlName="symbolicGrade" labelTranslation="configuration.form.grade"></app-input>
   <app-input
-    formControlName="minPercentage"
-    labelTranslation="configuration.form.percentFrom"
-    iconName="percent"
+    class="d-block"
+    formControlName="descriptiveGrade"
+    labelTranslation="configuration.form.gradeDescription"
   ></app-input>
-  <app-input
-    formControlName="maxPercentage"
-    labelTranslation="configuration.form.percentTo"
-    iconName="percent"
-  ></app-input>
-  <app-input formControlName="symbolicGrade" labelTranslation="configuration.form.grade"></app-input>
-  <app-input formControlName="descriptiveGrade" labelTranslation="configuration.form.gradeDescription"></app-input>
-</ng-container>
+</div>

@@ -1,8 +1,8 @@
-<mat-list>
-  <mat-list-item *ngFor="let item of data">
-    <p matLine matRipple class="grades-list-item">
-      <span class="symbolic-grade">{{ item.symbolicGrade }}</span>
-      <span class="percentage-range">{{ [0, 100] | percentageRange }}</span>
+<mat-list class="grades-list p-2">
+  <mat-list-item *ngFor="let item of data" class="grades-list-item my-1">
+    <p matLine matRipple class="grades-list-item-content d-flex gap-3 align-items-center">
+      <span class="grade">{{ item.symbolicGrade }}</span>
+      <span class="range">{{ [0, 100] | percentageRange }}</span>
       <span class="spacer"></span>
       <mat-icon>delete</mat-icon>
     </p>
