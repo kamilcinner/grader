@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field appearance="standard">
   <mat-label>{{ translatedLabel }}</mat-label>
   <input
     matInput
@@ -7,6 +7,6 @@
     [(ngModel)]="value"
     (ngModelChange)="onChange($event)"
   />
-  <mat-icon *ngIf="iconName" matSuffix>{{ iconName }}</mat-icon>
+  <mat-icon *ngIf="iconName" matSuffix class="icon">{{ iconName }}</mat-icon>
   <mat-hint>{{ translatedHint }}</mat-hint>
 </mat-form-field>

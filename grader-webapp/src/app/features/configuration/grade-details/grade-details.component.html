@@ -1,1 +1,14 @@
-<app-input [(ngModel)]="vm"></app-input>
+<ng-container [formGroup]="form">
+  <app-input
+    formControlName="minPercentage"
+    labelTranslation="configuration.form.percentFrom"
+    iconName="percent"
+  ></app-input>
+  <app-input
+    formControlName="maxPercentage"
+    labelTranslation="configuration.form.percentTo"
+    iconName="percent"
+  ></app-input>
+  <app-input formControlName="symbolicGrade" labelTranslation="configuration.form.grade"></app-input>
+  <app-input formControlName="descriptiveGrade" labelTranslation="configuration.form.gradeDescription"></app-input>
+</ng-container>

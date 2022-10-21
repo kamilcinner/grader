@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
+type GradeFormConfig = {
+  minPercentage: string | null;
+  maxPercentage: string | null;
+  symbolicGrade: string | null;
+  descriptiveGrade: string | null;
+};
 
 @Component({
   selector: 'app-grade-details',
@@ -7,19 +14,21 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
   styleUrls: ['./grade-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GradeDetailsComponent implements OnInit {
+export class GradeDetailsComponent {
   vm = 123;
 
-  constructor(private readonly fb: UntypedFormBuilder) {}
+  readonly form;
 
-  ngOnInit(): void {}
+  constructor(private readonly fb: FormBuilder) {
+    this.form = this.createForm();
+  }
 
-  private createForm(): UntypedFormGroup {
-    return this.fb.group({
-      id: [],
-      symbolicGrade: [],
-      descriptiveGrade: [],
-      minPercentage: [],
+  private createForm() {
+    return this.fb.group<GradeFormConfig>({
+      minPercentage: null,
+      maxPercentage: null,
+      symbolicGrade: null,
+      descriptiveGrade: null,
     });
   }
 }

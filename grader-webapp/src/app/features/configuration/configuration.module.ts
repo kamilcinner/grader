@@ -5,10 +5,11 @@ import { SharedModule } from '@shared/shared.module';
 import { ConfigurationService } from './configuration.service';
 import { GradesListComponent } from './grades-list/grades-list.component';
 import { GradeDetailsComponent } from './grade-details/grade-details.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ConfigurationComponent, GradesListComponent, GradeDetailsComponent],
-  imports: [SharedModule, ConfigurationRoutingModule],
+  imports: [SharedModule, ConfigurationRoutingModule, ReactiveFormsModule],
   providers: [ConfigurationService],
 })
 export class ConfigurationModule {}
