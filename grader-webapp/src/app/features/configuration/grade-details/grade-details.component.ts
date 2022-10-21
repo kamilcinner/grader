@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-grade-details',
@@ -7,7 +8,18 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GradeDetailsComponent implements OnInit {
-  constructor() {}
+  vm = 123;
+
+  constructor(private readonly fb: FormBuilder) {}
 
   ngOnInit(): void {}
+
+  private createForm(): FormGroup {
+    return this.fb.group({
+      id: [],
+      symbolicGrade: [],
+      descriptiveGrade: [],
+      minPercentage: [],
+    });
+  }
 }

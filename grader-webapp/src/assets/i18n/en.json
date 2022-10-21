@@ -3,5 +3,13 @@
   "sidenav": {
     "home": "Home",
     "configuration": "Configuration"
+  },
+  "configuration": {
+    "form": {
+      "percentFrom": "Percent from",
+      "percentTo": "Percent to",
+      "grade": "Grade",
+      "gradeDescription": "Grade description"
+    }
   }
 }
