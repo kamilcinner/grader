@@ -2,11 +2,12 @@
 @use 'sass:map';
 
 @use './themes/sidenav-theme' as sidenav;
+@use './themes/grades-list-theme' as grades-list;
 
 @include mat.core();
 
 $app-primary: mat.define-palette(mat.$green-palette, 800, 700, 900, 50);
-$app-accent: mat.define-palette(mat.$lime-palette, 500, 500, 500, 500);
+$app-accent: mat.define-palette(mat.$light-green-palette, 200, 100, 300, 50);
 
 $app-theme: mat.define-light-theme(
   (
@@ -21,3 +22,4 @@ $app-theme: mat.define-light-theme(
 @include mat.all-component-themes($app-theme);
 
 @include sidenav.theme($app-theme);
+@include grades-list.theme($app-theme);

@@ -1,0 +1,20 @@
+mat-list-item {
+  margin: 0.5rem 0;
+}
+
+.grades-list-item {
+  display: flex !important;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem !important;
+  border-radius: 1rem;
+  cursor: pointer;
+
+  .symbolic-grade {
+    font-weight: bold;
+  }
+
+  .percentage-range {
+    font-weight: lighter;
+  }
+}
