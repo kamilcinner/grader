@@ -6,9 +6,8 @@
   $accent-palette: map.get($color-config, 'accent');
 
   app-grades-list {
+    background-color: mat.get-color-from-palette($accent-palette, 'text') !important;
     .grades-list {
-      background-color: mat.get-color-from-palette($accent-palette, 'text') !important;
-
       &-item {
         &:hover {
           background-color: white;

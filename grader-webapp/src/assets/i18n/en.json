@@ -10,6 +10,9 @@
       "percentTo": "Percent to",
       "grade": "Grade",
       "gradeDescription": "Grade description"
+    },
+    "buttons": {
+      "addNewGrade": "Add new grade"
     }
   }
 }

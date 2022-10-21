@@ -10,7 +10,7 @@ import { first } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private static readonly MOBILE_MEDIA_QUERY_LISTENER_EVENT_TYPE = 'change';
-  private static readonly MOBILE_MEDIA_QUERY = '(max-width: 600px)';
+  private static readonly MOBILE_MEDIA_QUERY = '(max-width: 576px)';
   private static readonly DEFAULT_LANG = 'en';
 
   isSidenavOpened = false;

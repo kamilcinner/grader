@@ -1,8 +1,13 @@
 .app-container {
   height: 100vh;
-}
 
-main {
-  flex-grow: 1;
-  overflow-x: hidden;
+  .content-container {
+    display: flex;
+    flex-direction: column;
+
+    main {
+      flex-grow: 1;
+      overflow-x: hidden;
+    }
+  }
 }

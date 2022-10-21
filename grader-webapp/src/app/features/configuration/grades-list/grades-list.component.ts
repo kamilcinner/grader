@@ -52,6 +52,56 @@ export class GradesListComponent implements OnInit {
         symbolicGrade: 'A',
         minPercentage: 50,
       },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
+      {
+        id: 'id',
+        symbolicGrade: 'A',
+        minPercentage: 50,
+      },
     ];
   }
 
