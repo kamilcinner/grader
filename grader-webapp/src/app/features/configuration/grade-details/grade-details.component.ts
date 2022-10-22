@@ -4,6 +4,7 @@ import { GradeModel } from '../models/grade.model';
 import { ObjectUtils } from '@shared/utils/object.utils';
 import { CreateGradeDto } from '../dto/create-grade.dto';
 import { DeepNullable } from 'ts-essentials';
+import { ToastrHelper } from '@shared/helpers/toastr.helper';
 
 type GradeFormValueModel = DeepNullable<{
   minPercentage: number;
@@ -41,21 +42,27 @@ export class GradeDetailsComponent {
   readonly form: GradeForm;
   readonly maxPercentageControl = new FormControl<number | null>({ value: null, disabled: true });
 
-  constructor(private readonly fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder, private readonly toastr: ToastrHelper) {
     this.form = this.createForm();
+    console.log(this.form);
   }
 
-  onClickSend(): void {
-    if (this.form.valid) {
-      const formValue: GradeFormValueModel = this.form.value as GradeFormValueModel;
-      const createGradeDto: CreateGradeDto = ObjectUtils.removeFlatNulls(formValue);
-      this.saveGrade.emit(createGradeDto);
+  onSubmit(): void {
+    if (!this.form.valid) {
+      this.toastr.error('configuration.toastr.error.invalidForm');
+      return;
     }
+
+    const formValue: GradeFormValueModel = this.form.value as GradeFormValueModel;
+    const createGradeDto: CreateGradeDto = ObjectUtils.removeFlatNulls(formValue);
+    this.saveGrade.emit(createGradeDto);
   }
 
   private createForm(): GradeForm {
     return this.fb.group({
-      minPercentage: this.fb.control<number | null>(null, Validators.required),
+      minPercentage: this.fb.control<number | null>(null, {
+        validators: [Validators.required, Validators.min(0), Validators.max(100)],
+      }),
       symbolicGrade: this.fb.control<string | null>(null, Validators.required),
       descriptiveGrade: this.fb.control<string | null>(null),
     });

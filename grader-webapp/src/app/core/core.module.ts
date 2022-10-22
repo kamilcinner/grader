@@ -10,6 +10,8 @@ import { environment } from '@env/environment';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { ToastrModule } from 'ngx-toastr';
+import { InterceptorsModule } from './interceptors/interceptors.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -35,6 +37,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
+    ToastrModule.forRoot(),
+    InterceptorsModule,
   ],
   exports: [HeaderComponent, SidenavComponent],
 })

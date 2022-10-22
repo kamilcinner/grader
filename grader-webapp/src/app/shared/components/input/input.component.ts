@@ -23,7 +23,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() iconName?: string;
   @Input() type: 'text' | 'number' = 'text';
 
-  controlName?: string;
+  readonly controlName?: string;
   disabled = false;
   value: InputValue = null;
 
@@ -34,6 +34,18 @@ export class InputComponent implements ControlValueAccessor {
   ) {
     this.ngControl.valueAccessor = this;
     this.controlName = this.ngControl.name?.toString();
+  }
+
+  get valid(): boolean {
+    return !!this.ngControl.valid;
+  }
+
+  get errorMessage(): string {
+    let message = '';
+    Object.entries(this.ngControl.errors ?? {}).forEach(([key, params]) => {
+      message += key;
+    });
+    return message;
   }
 
   get translatedLabel(): string {
@@ -72,5 +84,7 @@ export class InputComponent implements ControlValueAccessor {
   updateModelValue(inputValue: InputValue): void {
     const modelValue: ModelValue = this.type === 'number' && inputValue ? parseInt(inputValue, 10) : this.value;
     this.onChange(modelValue);
+    this.onTouched();
+    this.cdr.detectChanges();
   }
 }

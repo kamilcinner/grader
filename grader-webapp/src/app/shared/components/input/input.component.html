@@ -1,13 +1,19 @@
 <mat-form-field color="accent" appearance="standard" class="control-container">
   <mat-label>{{ translatedLabel }}</mat-label>
   <input
+    [id]="controlName ?? ''"
     matInput
     [type]="type"
     [placeholder]="translatedPlaceholder"
     [disabled]="disabled"
     [(ngModel)]="value"
     (ngModelChange)="updateModelValue($event)"
+    (blur)="onTouched()"
+    (touchend)="onTouched()"
   />
   <mat-icon *ngIf="iconName" matSuffix class="icon">{{ iconName }}</mat-icon>
   <mat-hint>{{ translatedHint }}</mat-hint>
+  <mat-error [id]="controlName ?? ''" *ngIf="!valid">{{ errorMessage }}</mat-error>
 </mat-form-field>
+
+<span *ngIf="!valid">invalid prove</span>

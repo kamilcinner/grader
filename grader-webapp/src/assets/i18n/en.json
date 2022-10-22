@@ -17,6 +17,11 @@
     },
     "tooltips": {
       "delete": "Delete grade"
+    },
+    "toastr": {
+      "error": {
+        "invalidForm": "Invalid form"
+      }
     }
   }
 }
