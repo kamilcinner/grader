@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateGradeDto } from './dto/create-grade.dto';
 import { UpdateGradeDto } from './dto/update-grade.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Grade } from './entities/grade.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class GradesService {
-  create(createGradeDto: CreateGradeDto) {
-    return 'This action adds a new grade';
+  constructor(
+    @InjectRepository(Grade) private readonly repo: Repository<Grade>,
+  ) {}
+
+  async create(createGradeDto: CreateGradeDto) {
+    await this.checkIfMinPercentageIsAlreadyUsed(createGradeDto.minPercentage);
+
+    const grade = this.repo.create(createGradeDto);
+    return this.repo.save(grade);
   }
 
   findAll() {
-    return `This action returns all grades`;
+    return this.repo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} grade`;
+  findOne(id: string) {
+    return this.repo.findOneBy({ id });
   }
 
-  update(id: number, updateGradeDto: UpdateGradeDto) {
-    return `This action updates a #${id} grade`;
+  async update(id: string, updateGradeDto: UpdateGradeDto) {
+    const grade = await this.checkIfGradeWithIdExists(id);
+    await this.checkIfMinPercentageIsAlreadyUsed(updateGradeDto.minPercentage);
+
+    Object.assign(grade, updateGradeDto);
+    return this.repo.save(grade);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} grade`;
+  async remove(id: string) {
+    const grade = await this.checkIfGradeWithIdExists(id);
+
+    return this.repo.remove(grade);
+  }
+
+  private async checkIfGradeWithIdExists(id: string) {
+    const grade = await this.findOne(id);
+    if (!grade) {
+      throw new NotFoundException('grade not found');
+    }
+    return grade;
+  }
+
+  private async checkIfMinPercentageIsAlreadyUsed(minPercentage: number) {
+    const gradesWithSameMinPercentage = await this.repo.findBy({
+      minPercentage,
+    });
+
+    if (gradesWithSameMinPercentage.length) {
+      throw new BadRequestException({
+        statusCode: 409,
+        errorCode: 'AS014',
+        errorMessage: 'Minimum percentage value is already used!',
+      });
+    }
   }
 }
