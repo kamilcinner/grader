@@ -12,16 +12,17 @@ export class GradesListComponent {
   @Input() selectedGrade?: GradeModel;
 
   @Output() selectedGradeChange = new EventEmitter<GradeModel>();
+  @Output() unselectGrade = new EventEmitter<void>();
 
   onClickGrade(grade: GradeModel): void {
     this.selectedGradeChange.emit(grade);
   }
 
   isGradeSelected(grade: GradeModel): boolean {
-    return this.selectedGrade?.id === grade.id;
+    return this.selectedGrade === grade;
   }
 
   onClickAdd(): void {
-    this.selectedGradeChange.emit(undefined);
+    this.unselectGrade.emit();
   }
 }

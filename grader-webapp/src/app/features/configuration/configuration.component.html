@@ -1,4 +1,9 @@
-<ng-container *ngIf="grades$ | async as grades">
-  <app-grades-list [grades]="grades" [(selectedGrade)]="selectedGrade"></app-grades-list>
-  <app-grade-details [grade]="selectedGrade" (saveGrade)="saveGrade($event)"></app-grade-details>
+<ng-container *ngIf="vm$ | async as vm">
+  <app-grades-list
+    [grades]="vm.grades"
+    [selectedGrade]="vm.selectedGrade"
+    (selectedGradeChange)="onSelectedGradeChange($event)"
+    (unselectGrade)="onUnselectGrade()"
+  ></app-grades-list>
+  <app-grade-details [grade]="vm.selectedGrade" (saveGrade)="saveGrade($event)"></app-grade-details>
 </ng-container>

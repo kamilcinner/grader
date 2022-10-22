@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigurationService } from './configuration.service';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { GradeModel } from './models/grade.model';
 import { CreateGradeDto } from './dto/create-grade.dto';
 import { Select, Store } from '@ngxs/store';
 import { GradesState } from './state/grades.state';
 import { Grades } from './state/grades.actions';
-import { UpdateGradeDto } from './dto/update-grade.dto';
 
 @Component({
   selector: 'app-configuration',
@@ -14,33 +12,34 @@ import { UpdateGradeDto } from './dto/update-grade.dto';
   styleUrls: ['./configuration.component.scss'],
 })
 export class ConfigurationComponent implements OnInit {
-  @Select(GradesState.grades) grades$!: Observable<GradeModel[]>;
+  @Select(GradesState.grades)
+  private readonly grades$!: Observable<GradeModel[]>;
+  @Select(GradesState.selectedGrade)
+  private readonly selectedGrade$!: Observable<GradeModel | undefined>;
 
-  selectedGrade?: GradeModel;
+  readonly vm$ = combineLatest([this.grades$, this.selectedGrade$]).pipe(
+    map(([grades, selectedGrade]) => ({ grades, selectedGrade })),
+  );
 
-  constructor(private readonly configurationService: ConfigurationService, private readonly store: Store) {}
+  constructor(private readonly store: Store) {}
 
   ngOnInit(): void {
     this.getAllGrades();
   }
 
   saveGrade(createGradeDto: CreateGradeDto): void {
-    if (!this.selectedGrade) {
-      this.store.dispatch(new Grades.Create(createGradeDto));
-      return;
-    }
+    this.store.dispatch(new Grades.Save(createGradeDto));
+  }
 
-    const updateGradeDto: UpdateGradeDto = this.filterSameValues(createGradeDto);
-    this.store.dispatch(new Grades.Update(this.selectedGrade.id, updateGradeDto));
+  onSelectedGradeChange(selectedGrade: GradeModel): void {
+    this.store.dispatch(new Grades.Select(selectedGrade));
+  }
+
+  onUnselectGrade(): void {
+    this.store.dispatch(new Grades.Unselect());
   }
 
   private getAllGrades(): void {
     this.store.dispatch(new Grades.GetAll());
-  }
-
-  private filterSameValues(createGradeDto: CreateGradeDto): UpdateGradeDto {
-    return Object.fromEntries(
-      Object.entries(createGradeDto).filter(([key, value]) => value !== this.selectedGrade?.[key as keyof GradeModel]),
-    );
   }
 }

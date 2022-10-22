@@ -9,6 +9,7 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from '@env/environment';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -33,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       disabled: environment.production,
     }),
     NgxsRouterPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   exports: [HeaderComponent, SidenavComponent],
 })
