@@ -8,7 +8,7 @@
 
 .grades-list {
   overflow-y: auto;
-  border-bottom: 1px solid grey;
+  border-bottom: 2px solid var(--app-color-accent);
 
   &-item {
     border-radius: 1rem;

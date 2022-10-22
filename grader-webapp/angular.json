@@ -30,6 +30,7 @@
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/assets/styles/utils.scss",
+              "src/assets/styles/scroll.scss",
               "src/assets/styles/theme/theme.scss",
               "src/styles.scss"
             ],
