@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Self } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { TranslateHelper } from '@shared/helpers/translate.helper';
 
@@ -26,7 +26,11 @@ export class InputComponent implements ControlValueAccessor {
   disabled = false;
   value: Value = null;
 
-  constructor(@Self() private readonly ngControl: NgControl, private readonly translateHelper: TranslateHelper) {
+  constructor(
+    @Self() private readonly ngControl: NgControl,
+    private readonly translateHelper: TranslateHelper,
+    private readonly cdr: ChangeDetectorRef,
+  ) {
     this.ngControl.valueAccessor = this;
     this.controlName = this.ngControl.name?.toString();
   }
@@ -61,5 +65,6 @@ export class InputComponent implements ControlValueAccessor {
 
   writeValue(value: Value): void {
     this.value = value;
+    this.cdr.detectChanges();
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { GradeModel } from '../models/grade.model';
 
 @Component({
@@ -7,103 +7,17 @@ import { GradeModel } from '../models/grade.model';
   styleUrls: ['./grades-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GradesListComponent implements OnInit {
-  @Input() data!: GradeModel[];
+export class GradesListComponent {
+  @Input() grades!: GradeModel[];
+  @Input() selectedGrade?: GradeModel;
 
-  constructor() {
-    this.data = [
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-      {
-        id: 'id',
-        symbolicGrade: 'A',
-        minPercentage: 50,
-      },
-    ];
+  @Output() selectedGradeChange = new EventEmitter<GradeModel>();
+
+  onClickGrade(grade: GradeModel): void {
+    this.selectedGradeChange.emit(grade);
   }
 
-  ngOnInit(): void {}
+  isGradeSelected(grade: GradeModel): boolean {
+    return this.selectedGrade === grade;
+  }
 }

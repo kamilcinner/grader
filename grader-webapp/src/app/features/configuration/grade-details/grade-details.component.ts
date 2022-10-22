@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { GradeModel } from '../models/grade.model';
 
 type GradeFormConfig = {
-  minPercentage: string | null;
-  maxPercentage: string | null;
+  minPercentage: number | null;
+  maxPercentage: number | null;
   symbolicGrade: string | null;
   descriptiveGrade: string | null;
 };
@@ -15,7 +16,14 @@ type GradeFormConfig = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GradeDetailsComponent {
-  vm = 123;
+  @Input() set grade(grade: GradeModel | undefined) {
+    if (!grade) {
+      this.form.reset();
+      return;
+    }
+
+    this.form.patchValue(grade);
+  }
 
   readonly form;
 

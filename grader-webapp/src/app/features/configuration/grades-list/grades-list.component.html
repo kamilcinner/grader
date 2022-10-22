@@ -1,8 +1,14 @@
 <mat-list class="grades-list p-2">
-  <mat-list-item *ngFor="let item of data" matRipple class="grades-list-item my-1">
+  <mat-list-item
+    *ngFor="let grade of grades"
+    matRipple
+    class="grades-list-item my-1"
+    [class.selected]="isGradeSelected(grade)"
+    (click)="onClickGrade(grade)"
+  >
     <p matLine class="grades-list-item-content d-flex gap-3 align-items-center">
-      <span class="grade">{{ item.symbolicGrade }}</span>
-      <span class="range">{{ [0, 100] | percentageRange }}</span>
+      <span class="grade">{{ grade.symbolicGrade }}</span>
+      <span class="range">{{ [grade.minPercentage, 100] | percentageRange }}</span>
       <span class="spacer"></span>
       <mat-icon>delete</mat-icon>
     </p>
