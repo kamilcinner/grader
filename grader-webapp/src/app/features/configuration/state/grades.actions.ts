@@ -30,4 +30,9 @@ export namespace Grades {
     static readonly type = '[Grades] Save';
     constructor(public createGradeDto: CreateGradeDto) {}
   }
+
+  export class Delete {
+    static readonly type = '[Grades] Delete';
+    constructor(public gradeId: string) {}
+  }
 }

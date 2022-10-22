@@ -13,6 +13,7 @@ export class GradesListComponent {
 
   @Output() selectedGradeChange = new EventEmitter<GradeModel>();
   @Output() unselectGrade = new EventEmitter<void>();
+  @Output() deleteGradeById = new EventEmitter<string>();
 
   onClickGrade(grade: GradeModel): void {
     this.selectedGradeChange.emit(grade);
@@ -24,5 +25,10 @@ export class GradesListComponent {
 
   onClickAdd(): void {
     this.unselectGrade.emit();
+  }
+
+  onClickDelete(gradeId: string, event: MouseEvent): void {
+    event.stopPropagation();
+    this.deleteGradeById.emit(gradeId);
   }
 }

@@ -4,6 +4,7 @@
     [selectedGrade]="vm.selectedGrade"
     (selectedGradeChange)="onSelectedGradeChange($event)"
     (unselectGrade)="onUnselectGrade()"
+    (deleteGradeById)="onDeleteGradeById($event)"
   ></app-grades-list>
   <app-grade-details [grade]="vm.selectedGrade" (saveGrade)="saveGrade($event)"></app-grade-details>
 </ng-container>

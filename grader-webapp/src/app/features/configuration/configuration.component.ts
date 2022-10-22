@@ -39,6 +39,10 @@ export class ConfigurationComponent implements OnInit {
     this.store.dispatch(new Grades.Unselect());
   }
 
+  onDeleteGradeById(gradeId: string): void {
+    this.store.dispatch(new Grades.Delete(gradeId));
+  }
+
   private getAllGrades(): void {
     this.store.dispatch(new Grades.GetAll());
   }

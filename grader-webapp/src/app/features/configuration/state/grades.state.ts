@@ -101,4 +101,18 @@ export class GradesState {
       }),
     );
   }
+
+  @Action(Grades.Delete)
+  delete({ getState, setState, dispatch }: StateContext<GradesStateModel>, { gradeId }: Grades.Delete) {
+    return this.configurationService.deleteGrade(gradeId).pipe(
+      tap(() => {
+        const state = getState();
+        const grades = state.grades.filter((grade) => grade.id !== gradeId);
+        setState({ ...state, grades });
+        if (state.selectedGrade) {
+          dispatch(new Grades.Unselect());
+        }
+      }),
+    );
+  }
 }

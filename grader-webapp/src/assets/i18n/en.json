@@ -13,7 +13,10 @@
     },
     "buttons": {
       "addNewGrade": "Add new grade",
-      "send": "Send"
+      "save": "Save"
+    },
+    "tooltips": {
+      "delete": "Delete grade"
     }
   }
 }
