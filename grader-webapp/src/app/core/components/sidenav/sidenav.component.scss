@@ -13,6 +13,11 @@
 
     &:hover {
       cursor: pointer;
+      background-color: var(--app-color-primary-lighter);
+    }
+
+    * {
+      color: var(--app-color-primary-text);
     }
 
     &-icon {

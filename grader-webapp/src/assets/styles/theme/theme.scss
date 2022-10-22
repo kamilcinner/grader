@@ -1,8 +1,7 @@
 @use '@angular/material' as mat;
 @use 'sass:map';
 
-@use './themes/sidenav-theme' as sidenav;
-@use './themes/grades-list-theme' as grades-list;
+@use './css-variables' as theme-css-variables;
 
 @include mat.core();
 
@@ -21,5 +20,4 @@ $app-theme: mat.define-light-theme(
 @include mat.core-theme($app-theme);
 @include mat.all-component-themes($app-theme);
 
-@include sidenav.theme($app-theme);
-@include grades-list.theme($app-theme);
+@include theme-css-variables.color-variables($app-theme);
