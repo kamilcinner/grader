@@ -32,7 +32,11 @@ export class GradesService {
 
   async update(id: string, updateGradeDto: UpdateGradeDto) {
     const grade = await this.checkIfGradeWithIdExists(id);
-    await this.checkIfMinPercentageIsAlreadyUsed(updateGradeDto.minPercentage);
+    if (updateGradeDto.minPercentage != null) {
+      await this.checkIfMinPercentageIsAlreadyUsed(
+        updateGradeDto.minPercentage,
+      );
+    }
 
     Object.assign(grade, updateGradeDto);
     return this.repo.save(grade);

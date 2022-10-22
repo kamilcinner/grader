@@ -6,6 +6,7 @@ import { CreateGradeDto } from './dto/create-grade.dto';
 import { Select, Store } from '@ngxs/store';
 import { GradesState } from './state/grades.state';
 import { Grades } from './state/grades.actions';
+import { UpdateGradeDto } from './dto/update-grade.dto';
 
 @Component({
   selector: 'app-configuration',
@@ -24,14 +25,22 @@ export class ConfigurationComponent implements OnInit {
   }
 
   saveGrade(createGradeDto: CreateGradeDto): void {
-    if (this.selectedGrade) {
-      this.configurationService.updateGrade(this.selectedGrade.id, createGradeDto).subscribe();
+    if (!this.selectedGrade) {
+      this.store.dispatch(new Grades.Create(createGradeDto));
       return;
     }
-    this.configurationService.createGrade(createGradeDto).subscribe();
+
+    const updateGradeDto: UpdateGradeDto = this.filterSameValues(createGradeDto);
+    this.store.dispatch(new Grades.Update(this.selectedGrade.id, updateGradeDto));
   }
 
   private getAllGrades(): void {
-    this.store.dispatch(Grades.GetAll);
+    this.store.dispatch(new Grades.GetAll());
+  }
+
+  private filterSameValues(createGradeDto: CreateGradeDto): UpdateGradeDto {
+    return Object.fromEntries(
+      Object.entries(createGradeDto).filter(([key, value]) => value !== this.selectedGrade?.[key as keyof GradeModel]),
+    );
   }
 }

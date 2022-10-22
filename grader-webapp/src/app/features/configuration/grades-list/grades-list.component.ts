@@ -18,7 +18,7 @@ export class GradesListComponent {
   }
 
   isGradeSelected(grade: GradeModel): boolean {
-    return this.selectedGrade === grade;
+    return this.selectedGrade?.id === grade.id;
   }
 
   onClickAdd(): void {

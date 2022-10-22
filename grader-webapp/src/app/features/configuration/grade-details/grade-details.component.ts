@@ -48,8 +48,8 @@ export class GradeDetailsComponent {
   onClickSend(): void {
     if (this.form.valid) {
       const formValue: GradeFormValueModel = this.form.value as GradeFormValueModel;
-      const updateGradeDto: CreateGradeDto = ObjectUtils.removeFlatNulls(formValue);
-      this.saveGrade.emit(updateGradeDto);
+      const createGradeDto: CreateGradeDto = ObjectUtils.removeFlatNulls(formValue);
+      this.saveGrade.emit(createGradeDto);
     }
   }
 

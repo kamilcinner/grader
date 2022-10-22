@@ -5,13 +5,13 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 export class UpdateGradeDto extends PartialType(CreateGradeDto) {
   @IsOptional()
   @IsNumber()
-  minPercentage: number;
+  minPercentage?: number;
 
   @IsOptional()
   @IsString()
-  symbolicGrade: string;
+  symbolicGrade?: string;
 
   @IsOptional()
   @IsString()
-  descriptiveGrade: string;
+  descriptiveGrade?: string;
 }

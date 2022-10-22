@@ -19,18 +19,29 @@ const defaults = {
 })
 @Injectable()
 export class GradesState {
-  constructor(private readonly configurationService: ConfigurationService) {}
-
   @Selector()
   static grades(state: GradesStateModel) {
     return state.grades;
   }
 
+  static sortGrades(a: GradeModel, b: GradeModel): number {
+    if (a.minPercentage < b.minPercentage) {
+      return -1;
+    }
+    if (a.minPercentage > b.minPercentage) {
+      return 1;
+    }
+    return 0;
+  }
+
+  constructor(private readonly configurationService: ConfigurationService) {}
+
   @Action(Grades.GetAll)
-  getAll({ setState }: StateContext<GradesStateModel>) {
+  getAll({ getState, setState }: StateContext<GradesStateModel>) {
     return this.configurationService.getAllGrades().pipe(
       tap((grades) => {
-        setState({ grades });
+        const state = getState();
+        setState({ ...state, grades: grades.sort(GradesState.sortGrades) });
       }),
     );
   }
@@ -40,7 +51,21 @@ export class GradesState {
     return this.configurationService.createGrade(createGradeDto).pipe(
       tap((createdGrade) => {
         const state = getState();
-        setState({ grades: [...state.grades, createdGrade] });
+        const grades = [...state.grades.sort(GradesState.sortGrades), createdGrade];
+        setState({ ...state, grades });
+      }),
+    );
+  }
+
+  @Action(Grades.Update)
+  update({ getState, setState }: StateContext<GradesStateModel>, { gradeId, updateGradeDto }: Grades.Update) {
+    return this.configurationService.updateGrade(gradeId, updateGradeDto).pipe(
+      tap((updatedGrade) => {
+        const state = getState();
+        const grades = [...state.grades.filter((grade) => grade.id !== gradeId), updatedGrade].sort(
+          GradesState.sortGrades,
+        );
+        setState({ ...state, grades });
       }),
     );
   }
