@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } fr
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { TranslateHelper } from '@shared/helpers/translate.helper';
 
-type OnChangeFn = (value: Value) => void;
+type OnChangeFn = (value: ModelValue) => void;
 type OnTouchedFn = () => void;
-type Value = string | number | null;
+type InputValue = string | null;
+type ModelValue = string | number | null;
 
 @Component({
   selector: 'app-input',
@@ -24,7 +25,7 @@ export class InputComponent implements ControlValueAccessor {
 
   controlName?: string;
   disabled = false;
-  value: Value = null;
+  value: InputValue = null;
 
   constructor(
     @Self() private readonly ngControl: NgControl,
@@ -63,8 +64,13 @@ export class InputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  writeValue(value: Value): void {
-    this.value = value;
+  writeValue(modelValue: ModelValue): void {
+    this.value = modelValue != null ? `${modelValue}` : null;
     this.cdr.detectChanges();
+  }
+
+  updateModelValue(inputValue: InputValue): void {
+    const modelValue: ModelValue = this.type === 'number' && inputValue ? parseInt(inputValue, 10) : this.value;
+    this.onChange(modelValue);
   }
 }

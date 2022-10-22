@@ -12,7 +12,8 @@
       "gradeDescription": "Grade description"
     },
     "buttons": {
-      "addNewGrade": "Add new grade"
+      "addNewGrade": "Add new grade",
+      "send": "Send"
     }
   }
 }

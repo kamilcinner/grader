@@ -5,16 +5,24 @@
         formControlName="minPercentage"
         labelTranslation="configuration.form.percentFrom"
         iconName="percent"
+        type="number"
       ></app-input>
     </div>
     <div class="col">
       <app-input
-        formControlName="maxPercentage"
+        [formControl]="maxPercentageControl"
         labelTranslation="configuration.form.percentTo"
         iconName="percent"
+        type="number"
       ></app-input>
     </div>
   </div>
   <app-input formControlName="symbolicGrade" labelTranslation="configuration.form.grade"></app-input>
   <app-input formControlName="descriptiveGrade" labelTranslation="configuration.form.gradeDescription"></app-input>
+
+  <div class="d-flex justify-content-center mb-3">
+    <button mat-raised-button color="accent" (click)="onClickSend()">
+      <span translate="configuration.buttons.send"></span>
+    </button>
+  </div>
 </div>

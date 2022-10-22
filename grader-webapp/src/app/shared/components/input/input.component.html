@@ -2,10 +2,11 @@
   <mat-label>{{ translatedLabel }}</mat-label>
   <input
     matInput
+    [type]="type"
     [placeholder]="translatedPlaceholder"
     [disabled]="disabled"
     [(ngModel)]="value"
-    (ngModelChange)="onChange($event)"
+    (ngModelChange)="updateModelValue($event)"
   />
   <mat-icon *ngIf="iconName" matSuffix class="icon">{{ iconName }}</mat-icon>
   <mat-hint>{{ translatedHint }}</mat-hint>

@@ -20,4 +20,8 @@ export class GradesListComponent {
   isGradeSelected(grade: GradeModel): boolean {
     return this.selectedGrade === grade;
   }
+
+  onClickAdd(): void {
+    this.selectedGradeChange.emit(undefined);
+  }
 }

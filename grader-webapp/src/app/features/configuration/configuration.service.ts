@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GradeModel } from './models/grade.model';
 import { FeatureUrl } from '@shared/enums';
-import { CreateGradeDto, UpdateGradeDto } from './dto';
+import { CreateGradeDto } from './dto/create-grade.dto';
+import { UpdateGradeDto } from './dto/update-grade.dto';
 
 @Injectable()
 export class ConfigurationService extends HttpService {
@@ -20,8 +21,8 @@ export class ConfigurationService extends HttpService {
     return this.get<GradeModel>(`${FeatureUrl.GRADES}/${gradeId}`);
   }
 
-  createGrade(gradeId: string, grade: CreateGradeDto): Observable<GradeModel> {
-    return this.post<GradeModel>(`${FeatureUrl.GRADES}/${gradeId}`, grade);
+  createGrade(grade: CreateGradeDto): Observable<GradeModel> {
+    return this.post<GradeModel>(`${FeatureUrl.GRADES}`, grade);
   }
 
   updateGrade(gradeId: string, grade: UpdateGradeDto): Observable<GradeModel> {

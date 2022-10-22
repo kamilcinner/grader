@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ConfigurationService } from './configuration.service';
 import { combineLatest, map } from 'rxjs';
 import { GradeModel } from './models/grade.model';
+import { CreateGradeDto } from './dto/create-grade.dto';
 
 @Component({
   selector: 'app-configuration',
@@ -13,4 +14,12 @@ export class ConfigurationComponent {
   selectedGrade?: GradeModel;
 
   constructor(private readonly configurationService: ConfigurationService) {}
+
+  saveGrade(createGradeDto: CreateGradeDto): void {
+    if (this.selectedGrade) {
+      this.configurationService.updateGrade(this.selectedGrade.id, createGradeDto).subscribe();
+      return;
+    }
+    this.configurationService.createGrade(createGradeDto).subscribe();
+  }
 }

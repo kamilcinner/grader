@@ -1,5 +1,3 @@
-export type UpdateGradeDto = {
-  symbolicGrade?: string;
-  descriptiveGrade?: string;
-  minPercentage?: number;
-};
+import { CreateGradeDto } from './create-grade.dto';
+
+export type UpdateGradeDto = Partial<CreateGradeDto>;
