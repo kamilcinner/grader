@@ -5,6 +5,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SharedModule } from '@shared/shared.module';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from '@env/environment';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -22,6 +26,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production,
+    }),
+    NgxsLoggerPluginModule.forRoot({
+      disabled: environment.production,
+    }),
+    NgxsRouterPluginModule.forRoot(),
   ],
   exports: [HeaderComponent, SidenavComponent],
 })

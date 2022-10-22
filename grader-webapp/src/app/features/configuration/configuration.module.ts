@@ -5,11 +5,12 @@ import { SharedModule } from '@shared/shared.module';
 import { ConfigurationService } from './configuration.service';
 import { GradesListComponent } from './grades-list/grades-list.component';
 import { GradeDetailsComponent } from './grade-details/grade-details.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { GradesState } from './state/grades.state';
 
 @NgModule({
   declarations: [ConfigurationComponent, GradesListComponent, GradeDetailsComponent],
-  imports: [SharedModule, ConfigurationRoutingModule, ReactiveFormsModule],
+  imports: [SharedModule, ConfigurationRoutingModule, NgxsModule.forFeature([GradesState])],
   providers: [ConfigurationService],
 })
 export class ConfigurationModule {}
