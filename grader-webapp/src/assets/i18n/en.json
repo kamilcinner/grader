@@ -21,7 +21,17 @@
     "toastr": {
       "error": {
         "invalidForm": "Invalid form"
+      },
+      "success": {
+        "created": "Grade created",
+        "updated": "Grade updated",
+        "deleted": "Grade deleted"
       }
     }
+  },
+  "validators": {
+    "required": "Field is required.",
+    "max": "Cannot be bigger than {{ max }}.",
+    "min": "Cannot be less than {{ min }}."
   }
 }

@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class TranslateHelper {
-  constructor(private readonly translate: TranslateService) {}
+  constructor(readonly translate: TranslateService) {}
 
   getRawOrTranslatedOrEmpty(raw?: string, translation?: string): string {
     if (raw) {

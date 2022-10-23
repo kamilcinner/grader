@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { GradeModel } from '../models/grade.model';
 import { ObjectUtils } from '@shared/utils/object.utils';
@@ -42,12 +42,17 @@ export class GradeDetailsComponent {
   readonly form: GradeForm;
   readonly maxPercentageControl = new FormControl<number | null>({ value: null, disabled: true });
 
-  constructor(private readonly fb: FormBuilder, private readonly toastr: ToastrHelper) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly toastr: ToastrHelper,
+    private readonly cdr: ChangeDetectorRef,
+  ) {
     this.form = this.createForm();
-    console.log(this.form);
   }
 
   onSubmit(): void {
+    this.form.markAllAsTouched();
+    this.cdr.detectChanges();
     if (!this.form.valid) {
       this.toastr.error('configuration.toastr.error.invalidForm');
       return;
