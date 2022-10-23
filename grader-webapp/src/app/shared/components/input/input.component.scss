@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.control-container {
+  width: 100%;
+}
+
+.icon {
+  $size: 1rem;
+
+  font-size: $size;
+  width: $size;
+  height: $size;
+}

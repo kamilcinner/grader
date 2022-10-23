@@ -1,0 +1,7 @@
+:host {
+  height: 100%;
+  max-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(576px / 2), 1fr));
+  grid-template-rows: minmax(0, 1fr);
+}

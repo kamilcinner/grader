@@ -1,0 +1,32 @@
+<mat-list class="grades-list p-2">
+  <mat-list-item
+    *ngFor="let grade of grades; index as gradeIndex"
+    matRipple
+    class="grades-list-item my-1"
+    [class.selected]="isGradeSelected(grade)"
+    (click)="onClickGrade(grade)"
+  >
+    <p matLine class="grades-list-item-content d-flex gap-3 align-items-center">
+      <span class="grade">{{ grade.symbolicGrade }}</span>
+      <span class="range">{{ [grade.minPercentage, getGradeMaxPercentage(gradeIndex)] | percentageRange }}</span>
+      <span class="spacer"></span>
+      <button
+        mat-icon-button
+        matTooltipPosition="right"
+        [matTooltip]="'configuration.tooltips.delete' | translate"
+        (click)="onClickDelete(grade.id, $event)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </p>
+  </mat-list-item>
+</mat-list>
+
+<mat-divider class="mx-3"></mat-divider>
+
+<button mat-button (click)="onClickAdd()">
+  <span class="d-inline-flex align-items-center gap-2">
+    <mat-icon>add</mat-icon>
+    <span>{{ 'configuration.buttons.addNewGrade' | translate | uppercase }}</span>
+  </span>
+</button>

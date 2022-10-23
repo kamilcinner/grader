@@ -1,0 +1,16 @@
+<mat-sidenav-container *ngIf="isLangInit" class="app-container">
+  <mat-sidenav [(opened)]="isSidenavOpened" [mode]="isMobile ? 'over' : 'side'" role="navigation" class="sidenav">
+    <nav>
+      <app-sidenav (itemClick)="onSidenavItemClick($event)"></app-sidenav>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content role="main" class="content-container">
+    <header>
+      <app-header [isMobile]="isMobile" [(isSidenavOpened)]="isSidenavOpened"></app-header>
+    </header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

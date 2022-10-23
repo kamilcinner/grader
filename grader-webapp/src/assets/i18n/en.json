@@ -1,0 +1,41 @@
+{
+  "title": "Grading system",
+  "sidenav": {
+    "home": "Home",
+    "configuration": "Configuration"
+  },
+  "configuration": {
+    "form": {
+      "percentFrom": "Percent from",
+      "percentTo": "Percent to",
+      "grade": "Grade",
+      "gradeDescription": "Grade description"
+    },
+    "buttons": {
+      "addNewGrade": "Add new grade",
+      "save": "Save"
+    },
+    "tooltips": {
+      "delete": "Delete grade"
+    },
+    "toastr": {
+      "error": {
+        "invalidForm": "Invalid form"
+      },
+      "success": {
+        "created": "Grade created",
+        "updated": "Grade updated",
+        "deleted": "Grade deleted"
+      },
+      "info": {
+        "nothingChanged": "Nothing changed",
+        "fillForm": "Please fill the form"
+      }
+    }
+  },
+  "validators": {
+    "required": "Field is required.",
+    "max": "Cannot be bigger than {{ max }}.",
+    "min": "Cannot be less than {{ min }}."
+  }
+}

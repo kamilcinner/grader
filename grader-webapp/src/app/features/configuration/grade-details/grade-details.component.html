@@ -1,0 +1,28 @@
+<form class="container-fluid" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row row-cols-1 row-cols-md-2 gx-5 justify-content-center">
+    <div class="col">
+      <app-input
+        formControlName="minPercentage"
+        labelTranslation="configuration.form.percentFrom"
+        iconName="percent"
+        type="number"
+      ></app-input>
+    </div>
+    <div class="col">
+      <app-input
+        [formControl]="maxPercentageControl"
+        labelTranslation="configuration.form.percentTo"
+        iconName="percent"
+        type="number"
+      ></app-input>
+    </div>
+  </div>
+  <app-input formControlName="symbolicGrade" labelTranslation="configuration.form.grade"></app-input>
+  <app-input formControlName="descriptiveGrade" labelTranslation="configuration.form.gradeDescription"></app-input>
+
+  <div class="d-flex justify-content-center mb-3">
+    <button mat-raised-button color="primary" type="submit">
+      <span translate="configuration.buttons.save"></span>
+    </button>
+  </div>
+</form>

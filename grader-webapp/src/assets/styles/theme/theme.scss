@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+@use './css-variables' as theme-css-variables;
+
+@include mat.core();
+
+$app-primary: mat.define-palette(mat.$green-palette, 300, 100, 800, 50);
+$app-accent: mat.define-palette(mat.$blue-grey-palette, 500, 100, 800, 900);
+
+$app-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $app-primary,
+      accent: $app-accent,
+    ),
+  )
+);
+
+@include mat.core-theme($app-theme);
+@include mat.all-component-themes($app-theme);
+
+@include theme-css-variables.color-variables($app-theme);

@@ -1,0 +1,17 @@
+.app-container {
+  height: 100vh;
+
+  .sidenav {
+    background-color: var(--app-color-primary-darker);
+  }
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+
+    main {
+      flex-grow: 1;
+      overflow-x: hidden;
+    }
+  }
+}
