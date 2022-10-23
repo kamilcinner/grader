@@ -15,6 +15,10 @@ export class GradesListComponent {
   @Output() unselectGrade = new EventEmitter<void>();
   @Output() deleteGradeById = new EventEmitter<string>();
 
+  getGradeMaxPercentage(gradeIndex: number): number {
+    return (this.grades[gradeIndex + 1]?.minPercentage ?? 101) - 1;
+  }
+
   onClickGrade(grade: GradeModel): void {
     this.selectedGradeChange.emit(grade);
   }

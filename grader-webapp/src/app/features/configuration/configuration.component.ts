@@ -3,7 +3,7 @@ import { combineLatest, map, Observable } from 'rxjs';
 import { GradeModel } from './models/grade.model';
 import { CreateGradeDto } from './dto/create-grade.dto';
 import { Select, Store } from '@ngxs/store';
-import { GradesState } from './state/grades.state';
+import { GradesState, GradesStateModel } from './state/grades.state';
 import { Grades } from './state/grades.actions';
 
 @Component({
@@ -14,11 +14,11 @@ import { Grades } from './state/grades.actions';
 export class ConfigurationComponent implements OnInit {
   @Select(GradesState.grades)
   private readonly grades$!: Observable<GradeModel[]>;
-  @Select(GradesState.selectedGrade)
-  private readonly selectedGrade$!: Observable<GradeModel | undefined>;
+  @Select(GradesState.selected)
+  private readonly selected$!: Observable<GradesStateModel['selected'] | undefined>;
 
-  readonly vm$ = combineLatest([this.grades$, this.selectedGrade$]).pipe(
-    map(([grades, selectedGrade]) => ({ grades, selectedGrade })),
+  readonly vm$ = combineLatest([this.grades$, this.selected$]).pipe(
+    map(([grades, selected]) => ({ grades, selected })),
   );
 
   constructor(private readonly store: Store) {}

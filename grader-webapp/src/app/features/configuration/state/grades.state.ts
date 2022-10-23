@@ -3,12 +3,15 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { GradeModel } from '../models/grade.model';
 import { Grades } from './grades.actions';
 import { ConfigurationService } from '../configuration.service';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { UpdateGradeDto } from '../dto/update-grade.dto';
 
 export type GradesStateModel = {
   grades: GradeModel[];
-  selectedGrade?: GradeModel;
+  selected?: {
+    grade: GradeModel;
+    maxPercentage: number;
+  };
 };
 
 const defaults = {
@@ -27,8 +30,8 @@ export class GradesState {
   }
 
   @Selector()
-  static selectedGrade(state: GradesStateModel) {
-    return state.selectedGrade;
+  static selected(state: GradesStateModel) {
+    return state.selected;
   }
 
   static sortGrades(a: GradeModel, b: GradeModel): number {
@@ -56,49 +59,53 @@ export class GradesState {
   @Action(Grades.Select)
   select({ getState, setState }: StateContext<GradesStateModel>, { selectedGrade }: Grades.Select) {
     const state = getState();
-    setState({ ...state, selectedGrade });
+    const selectedGradeIndex = state.grades.indexOf(selectedGrade);
+    const selectedGradeMaxPercentage = (state.grades[selectedGradeIndex + 1]?.minPercentage ?? 101) - 1;
+    setState({ ...state, selected: { grade: selectedGrade, maxPercentage: selectedGradeMaxPercentage } });
   }
 
   @Action(Grades.Unselect)
   unselect({ getState, setState }: StateContext<GradesStateModel>) {
     const state = getState();
-    setState({ ...state, selectedGrade: undefined });
+    setState({ ...state, selected: undefined });
   }
 
   @Action(Grades.Save)
   save({ getState, dispatch }: StateContext<GradesStateModel>, { createGradeDto }: Grades.Save) {
     const state = getState();
-    if (!state.selectedGrade) {
+    if (!state.selected) {
       return dispatch(new Grades.Create(createGradeDto));
     }
 
     const updateGradeDto: UpdateGradeDto = Object.fromEntries(
-      Object.entries(createGradeDto).filter(([key, value]) => value !== state.selectedGrade?.[key as keyof GradeModel]),
+      Object.entries(createGradeDto).filter(([key, value]) => value !== state.selected?.grade[key as keyof GradeModel]),
     );
-    return dispatch(new Grades.Update(state.selectedGrade.id, updateGradeDto));
+    return dispatch(new Grades.Update(state.selected.grade.id, updateGradeDto));
   }
 
   @Action(Grades.Create)
-  create({ getState, setState }: StateContext<GradesStateModel>, { createGradeDto }: Grades.Create) {
+  create({ getState, setState, dispatch }: StateContext<GradesStateModel>, { createGradeDto }: Grades.Create) {
     return this.configurationService.createGrade(createGradeDto).pipe(
       tap((createdGrade) => {
         const state = getState();
         const grades = [...state.grades, createdGrade].sort(GradesState.sortGrades);
-        setState({ ...state, grades, selectedGrade: createdGrade });
+        setState({ ...state, grades });
       }),
+      switchMap((createdGrade) => dispatch(new Grades.Select(createdGrade))),
     );
   }
 
   @Action(Grades.Update)
-  update({ getState, setState }: StateContext<GradesStateModel>, { gradeId, updateGradeDto }: Grades.Update) {
+  update({ getState, setState, dispatch }: StateContext<GradesStateModel>, { gradeId, updateGradeDto }: Grades.Update) {
     return this.configurationService.updateGrade(gradeId, updateGradeDto).pipe(
       tap((updatedGrade) => {
         const state = getState();
         const grades = [...state.grades.filter((grade) => grade.id !== gradeId), updatedGrade].sort(
           GradesState.sortGrades,
         );
-        setState({ ...state, grades, selectedGrade: updatedGrade });
+        setState({ ...state, grades });
       }),
+      switchMap((updatedGrade) => dispatch(new Grades.Select(updatedGrade))),
     );
   }
 
@@ -109,7 +116,7 @@ export class GradesState {
         const state = getState();
         const grades = state.grades.filter((grade) => grade.id !== gradeId);
         setState({ ...state, grades });
-        if (state.selectedGrade) {
+        if (state.selected?.grade.id === gradeId) {
           dispatch(new Grades.Unselect());
         }
       }),
