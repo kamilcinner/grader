@@ -3,8 +3,10 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { GradeModel } from '../models/grade.model';
 import { Grades } from './grades.actions';
 import { ConfigurationService } from '../configuration.service';
-import { switchMap, tap } from 'rxjs';
+import { EMPTY, switchMap, tap } from 'rxjs';
 import { UpdateGradeDto } from '../dto/update-grade.dto';
+import { compose, insertItem, patch, removeItem, updateItem } from '@ngxs/store/operators';
+import { sortItems } from '@shared/state/operators';
 
 export type GradesStateModel = {
   grades: GradeModel[];
@@ -47,27 +49,25 @@ export class GradesState {
   constructor(private readonly configurationService: ConfigurationService) {}
 
   @Action(Grades.GetAll)
-  getAll({ getState, setState }: StateContext<GradesStateModel>) {
+  getAll({ patchState }: StateContext<GradesStateModel>) {
     return this.configurationService.getAllGrades().pipe(
       tap((grades) => {
-        const state = getState();
-        setState({ ...state, grades: grades.sort(GradesState.sortGrades) });
+        patchState({ grades: grades.sort(GradesState.sortGrades) });
       }),
     );
   }
 
   @Action(Grades.Select)
-  select({ getState, setState }: StateContext<GradesStateModel>, { selectedGrade }: Grades.Select) {
+  select({ getState, patchState }: StateContext<GradesStateModel>, { selectedGrade }: Grades.Select) {
     const state = getState();
     const selectedGradeIndex = state.grades.indexOf(selectedGrade);
     const selectedGradeMaxPercentage = (state.grades[selectedGradeIndex + 1]?.minPercentage ?? 101) - 1;
-    setState({ ...state, selected: { grade: selectedGrade, maxPercentage: selectedGradeMaxPercentage } });
+    patchState({ selected: { grade: selectedGrade, maxPercentage: selectedGradeMaxPercentage } });
   }
 
   @Action(Grades.Unselect)
-  unselect({ getState, setState }: StateContext<GradesStateModel>) {
-    const state = getState();
-    setState({ ...state, selected: undefined });
+  unselect({ patchState }: StateContext<GradesStateModel>) {
+    patchState({ selected: undefined });
   }
 
   @Action(Grades.Save)
@@ -84,26 +84,31 @@ export class GradesState {
   }
 
   @Action(Grades.Create)
-  create({ getState, setState, dispatch }: StateContext<GradesStateModel>, { createGradeDto }: Grades.Create) {
+  create({ setState, dispatch }: StateContext<GradesStateModel>, { createGradeDto }: Grades.Create) {
     return this.configurationService.createGrade(createGradeDto).pipe(
       tap((createdGrade) => {
-        const state = getState();
-        const grades = [...state.grades, createdGrade].sort(GradesState.sortGrades);
-        setState({ ...state, grades });
+        setState(
+          patch<GradesStateModel>({
+            grades: compose(insertItem(createdGrade), sortItems(GradesState.sortGrades)),
+          }),
+        );
       }),
       switchMap((createdGrade) => dispatch(new Grades.Select(createdGrade))),
     );
   }
 
   @Action(Grades.Update)
-  update({ getState, setState, dispatch }: StateContext<GradesStateModel>, { gradeId, updateGradeDto }: Grades.Update) {
+  update({ setState, dispatch }: StateContext<GradesStateModel>, { gradeId, updateGradeDto }: Grades.Update) {
     return this.configurationService.updateGrade(gradeId, updateGradeDto).pipe(
       tap((updatedGrade) => {
-        const state = getState();
-        const grades = [...state.grades.filter((grade) => grade.id !== gradeId), updatedGrade].sort(
-          GradesState.sortGrades,
+        setState(
+          patch<GradesStateModel>({
+            grades: compose(
+              updateItem((grade) => grade?.id === gradeId, updatedGrade),
+              sortItems(GradesState.sortGrades),
+            ),
+          }),
         );
-        setState({ ...state, grades });
       }),
       switchMap((updatedGrade) => dispatch(new Grades.Select(updatedGrade))),
     );
@@ -113,13 +118,13 @@ export class GradesState {
   delete({ getState, setState, dispatch }: StateContext<GradesStateModel>, { gradeId }: Grades.Delete) {
     return this.configurationService.deleteGrade(gradeId).pipe(
       tap(() => {
-        const state = getState();
-        const grades = state.grades.filter((grade) => grade.id !== gradeId);
-        setState({ ...state, grades });
-        if (state.selected?.grade.id === gradeId) {
-          dispatch(new Grades.Unselect());
-        }
+        setState(
+          patch<GradesStateModel>({
+            grades: removeItem((grade) => grade?.id === gradeId),
+          }),
+        );
       }),
+      switchMap(() => (getState().selected?.grade.id === gradeId ? dispatch(new Grades.Unselect()) : EMPTY)),
     );
   }
 }
