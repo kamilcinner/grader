@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { combineLatest, map, Observable } from 'rxjs';
 import { GradeModel } from './models/grade.model';
 import { CreateGradeDto } from './dto/create-grade.dto';
@@ -11,7 +11,7 @@ import { Grades } from './state/grades.actions';
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.scss'],
 })
-export class ConfigurationComponent implements OnInit {
+export class ConfigurationComponent {
   @Select(GradesState.grades)
   private readonly grades$!: Observable<GradeModel[]>;
   @Select(GradesState.selected)
@@ -23,11 +23,7 @@ export class ConfigurationComponent implements OnInit {
 
   constructor(private readonly store: Store) {}
 
-  ngOnInit(): void {
-    this.getAllGrades();
-  }
-
-  saveGrade(createGradeDto: CreateGradeDto): void {
+  onSaveGrade(createGradeDto: CreateGradeDto): void {
     this.store.dispatch(new Grades.Save(createGradeDto));
   }
 
@@ -41,9 +37,5 @@ export class ConfigurationComponent implements OnInit {
 
   onDeleteGradeById(gradeId: string): void {
     this.store.dispatch(new Grades.Delete(gradeId));
-  }
-
-  private getAllGrades(): void {
-    this.store.dispatch(new Grades.GetAll());
   }
 }

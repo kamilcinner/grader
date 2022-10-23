@@ -1,9 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector, InitState } from '@ngxs/store';
 import { GradeModel } from '../models/grade.model';
 import { Grades } from './grades.actions';
 import { ConfigurationService } from '../configuration.service';
-import { catchError, EMPTY, switchMap } from 'rxjs';
+import { catchError, EMPTY, mergeMap, switchMap } from 'rxjs';
 import { UpdateGradeDto } from '../dto/update-grade.dto';
 import { compose, insertItem, patch, removeItem, updateItem } from '@ngxs/store/operators';
 import { sortItems } from '@shared/state/operators';
@@ -54,10 +54,16 @@ export class GradesState {
     private readonly ngZone: NgZone,
   ) {}
 
+  @Action(InitState)
+  ngxsOnInit({ dispatch }: StateContext<GradesStateModel>) {
+    dispatch(new Grades.GetAll());
+  }
+
   @Action(Grades.GetAll)
   getAll({ dispatch }: StateContext<GradesStateModel>) {
     return this.configurationService.getAllGrades().pipe(
       switchMap((grades) => dispatch(new GradesApi.GetAllSuccess(grades))),
+      mergeMap(() => dispatch(new Grades.Unselect())),
       catchError((err) => dispatch(new GradesApi.GetAllFailed(err))),
     );
   }
