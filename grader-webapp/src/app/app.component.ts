@@ -2,6 +2,9 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { first } from 'rxjs';
+import { SidenavItemModel } from './core/components/sidenav/sidenav-item.model';
+import { Store } from '@ngxs/store';
+import { Navigate } from '@ngxs/router-plugin';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly cdr: ChangeDetectorRef,
     private readonly media: MediaMatcher,
     private readonly translate: TranslateService,
+    private readonly store: Store,
   ) {
     this.mobileQuery = media.matchMedia(AppComponent.MOBILE_MEDIA_QUERY);
     this.isMobile = this.mobileQuery.matches;
@@ -42,6 +46,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener(AppComponent.MOBILE_MEDIA_QUERY_LISTENER_EVENT_TYPE, this.mobileQueryListener);
+  }
+
+  onSidenavItemClick(item: SidenavItemModel): void {
+    this.store.dispatch(new Navigate([item.path]));
+    if (this.isMobile && this.isSidenavOpened) {
+      this.isSidenavOpened = false;
+    }
   }
 
   private initLang(): void {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { SIDENAV_CONFIG } from './sidenav-config.constant';
 import { SidenavItemModel } from './sidenav-item.model';
 
@@ -9,9 +9,15 @@ import { SidenavItemModel } from './sidenav-item.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent {
+  @Output() itemClick = new EventEmitter<SidenavItemModel>();
+
   readonly sidenavItems: SidenavItemModel[];
 
   constructor() {
     this.sidenavItems = [...SIDENAV_CONFIG];
+  }
+
+  onItemClick(item: SidenavItemModel): void {
+    this.itemClick.emit(item);
   }
 }
