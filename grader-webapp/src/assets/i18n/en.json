@@ -26,6 +26,9 @@
         "created": "Grade created",
         "updated": "Grade updated",
         "deleted": "Grade deleted"
+      },
+      "info": {
+        "nothingChanged": "Nothing changed"
       }
     }
   },

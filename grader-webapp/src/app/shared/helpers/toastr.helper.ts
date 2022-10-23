@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class ToastrHelper {
-  constructor(private readonly toastr: ToastrService, private readonly translate: TranslateService) {}
+  constructor(public readonly toastr: ToastrService, private readonly translate: TranslateService) {}
 
   success(messageTranslation: string): void {
     this.toastr.success(this.translate.instant(messageTranslation));
