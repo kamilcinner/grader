@@ -1,23 +1,32 @@
 import { TestBed, async } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { GradesState } from './grades.state';
-import { GradesAction } from './grades.actions';
+import { Grades } from './grades.actions';
+import { GradeModel } from '../models/grade.model';
 
 describe('Grades actions', () => {
   let store: Store;
+  const mock = {
+    grade: {
+      id: '',
+      minPercentage: 0,
+      symbolicGrade: '',
+    },
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([GradesState])]
+      imports: [NgxsModule.forRoot([GradesState])],
     }).compileComponents();
     store = TestBed.get(Store);
   }));
 
   it('should create an action and add an item', () => {
-    store.dispatch(new GradesAction('item-1'));
-    store.select(state => state.grades.items).subscribe((items: string[]) => {
-      expect(items).toEqual(jasmine.objectContaining([ 'item-1' ]));
-    });
+    store.dispatch(new Grades.Select(mock.grade));
+    store
+      .select((state) => state.selected.grade)
+      .subscribe((grade: GradeModel) => {
+        expect(grade).toEqual(mock.grade);
+      });
   });
-
 });

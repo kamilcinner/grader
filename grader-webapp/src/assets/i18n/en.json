@@ -28,7 +28,8 @@
         "deleted": "Grade deleted"
       },
       "info": {
-        "nothingChanged": "Nothing changed"
+        "nothingChanged": "Nothing changed",
+        "fillForm": "Please fill the form"
       }
     }
   },
